@@ -1,20 +1,17 @@
 {{#if expandable}}
-    <div {{bind-attr class="expanded:rotate-down:rotate :fa :fa-chevron-right  model.propagatedReviewRequired::text-muted "}} {{action 'toggleExpand'}}></div>
+    <div {{bind-attr class="expanded:rotate-down:rotate :fa :fa-chevron-right"}} {{action 'toggleExpand'}}></div>
 {{/if}}
 {{#if loading}}
     <i class="fa fa-circle-o-notch fa-spin"></i>
 {{/if}}
-{{#link-to 'concepts.detail' model.type model.id (query-params type="general") classBinding="isActive:text-warning model.propagatedReviewRequired::text-muted"}}{{model.label}}
-{{#if isVoted}}
-    <span class="glyphicon glyphicon-ok" title="reviewed"/>
-{{/if}}
-{{/link-to}}
+{{label}}
 
 {{#if showSublist}}
     <ul class="sublist">
       {{#if expanded}}
         {{#each child in children}}
-          {{#async-expanding-tree sectors=sectors includeLeafs=includeLeafs reviewRequiredChanged="bubblePersistChange" model=child enableCheckbox=enableCheckbox activeConcepts=activeConcepts expandedConcepts=expandedConcepts votedConcepts=votedConcepts}}{{/async-expanding-tree}}
+          {{#async-expanding-tree model=child config=config}}
+          {{/async-expanding-tree}}
         {{/each}}
         {{#if showLoadMore}}
             <button class="btn btn-info btn-sm" {{action 'loadMoreChildren'}}>load more</button>
