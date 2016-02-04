@@ -19,6 +19,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend(
     # max amount (n) of children to be shown before a load more button is presented
     # load more button shows an extra n children
     showMaxChildren: 50
+    # route used in link-to of the node
+    linkToRoute: 'concepts.show'
 
   init: ->
     @_super()
@@ -50,7 +52,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend(
       true
   fetchChildren: ->
     @set('loading', true)
-    @get('getChildren')().then(=>
+    @get('getChildren')(@get('model')).then(=>
       @set 'loading', false
       @set 'childrenFetched', true
       if @get('model.children.length') > 0
