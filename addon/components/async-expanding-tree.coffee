@@ -20,6 +20,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     showMaxChildren: 50
     # route used in link-to of the node
     linkToRoute: 'concepts.show'
+    # show nodes without children
+    includeLeafs: true
   fetchChildrenOnInit: false
 
   init: () ->
@@ -48,9 +50,9 @@ AsyncExpandingTreeComponent = Ember.Component.extend
   expanded: false
   loading: false
   tagName: 'li'
-  showSublist: Ember.computed 'includeLeafs', ->
+  showSublist: Ember.computed 'config.includeLeafs', ->
     if @get('model.children.length') > 0
-      @get('includeLeafs')
+      @get('config.includeLeafs')
     else
       true
   fetchChildren: ->
