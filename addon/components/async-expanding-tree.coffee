@@ -1,8 +1,8 @@
 `import Ember from 'ember'`
 `import layout from '../templates/components/async-expanding-tree'`
 
-AsyncExpandingTreeComponent = Ember.Component.extend(
-  layout
+AsyncExpandingTreeComponent = Ember.Component.extend
+  layout,
 
   # default configuration
   config:
@@ -78,6 +78,6 @@ AsyncExpandingTreeComponent = Ember.Component.extend(
       extraSlice = @get('sortedChildren').slice(@get('childrenSlice'), newSlice)
       @get('children').pushObjects(extraSlice)
       @set('childrenSlice', newSlice)
-)
+
 
 `export default AsyncExpandingTreeComponent`
