@@ -10,7 +10,7 @@
     <ul class="sublist">
       {{#if expanded}}
         {{#each child in children}}
-          {{#async-expanding-tree model=child config=config}}
+          {{#async-expanding-tree model=child config=config fetchChildrenOnInit=true}}
           {{/async-expanding-tree}}
         {{/each}}
         {{#if showLoadMore}}

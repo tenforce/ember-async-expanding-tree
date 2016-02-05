@@ -20,9 +20,12 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     showMaxChildren: 50
     # route used in link-to of the node
     linkToRoute: 'concepts.show'
+  fetchChildrenOnInit: false
 
   init: () ->
     @_super(arguments)
+    if @get('fetchChildrenOnInit')
+      @fetchChildren()
     if @get('expandedConcepts')?.contains(@get('model.id')) and not @get('expanded')
       @toggleExpandF()
 
