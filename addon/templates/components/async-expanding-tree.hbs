@@ -1,5 +1,5 @@
 {{#if expandable}}
-    <div {{bind-attr class="expanded:rotate-down:rotate :fa :fa-chevron-right"}} {{action 'toggleExpand'}}></div>
+    <div class="{{if expanded 'aet-expanded' 'aet-collapsed'}}" {{action 'toggleExpand'}}></div>
 {{/if}}
 {{#if loading}}
     <i class="fa fa-circle-o-notch fa-spin"></i>
@@ -9,7 +9,7 @@
 {{#if showSublist}}
     <ul class="sublist">
       {{#if expanded}}
-        {{#each child in children}}
+        {{#each child in model.children}}
           {{#async-expanding-tree model=child config=config fetchChildrenOnInit=true}}
           {{/async-expanding-tree}}
         {{/each}}
