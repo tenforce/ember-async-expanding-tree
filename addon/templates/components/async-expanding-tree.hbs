@@ -4,7 +4,7 @@
 {{#if loading}}
     <i class="fa fa-circle-o-notch fa-spin"></i>
 {{/if}}
-{{#link-to linkToRoute model.id}}{{label}}{{/link-to}}
+<span {{action 'clickItem' model}}>{{label}}</span>
 
 {{#if showSublist}}
     <ul class="sublist">

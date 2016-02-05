@@ -8,6 +8,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     # property path to the property that should be used as label
     # e.g. model.label.en would be label.en
     labelPropertyPath: 'label'
+    # function that is called with the selected model when the label of the model is clicked
+    onActivate: (model) ->
     # function to retrieve children of the parent object
     # this function should return a Promise that has updated model.children when succeeded
     getChildren: (model) ->
@@ -72,6 +74,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     else
       @get('expandedConcepts').removeObject(@get('model.id'))
   actions:
+    clickItem: ->
+      @get('config.onActivate')?(@get('model'))
     toggleExpand: ->
       @toggleExpandF()
     loadMoreChildren: ->
