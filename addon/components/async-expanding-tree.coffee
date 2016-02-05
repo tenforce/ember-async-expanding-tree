@@ -41,16 +41,16 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     [@get('labelPropertyPath')]
   childrenFetched: false
   childrenSlice: 50
-  expandable: Ember.computed 'model.children', 'model.grouping', 'loading',  ->
-    (not @get('loading')) and (@get('model.grouping') or @get('model.children.length'))
+  expandable: Ember.computed 'model.children', 'loading',  ->
+    (not @get('loading')) and @get('model.children.length')
   showLoadMore: Ember.computed 'model.children.length', 'childrenSlice', 'loading', ->
     (!@get('loading')) && @get('childrenSlice') < @get('model.children.length')
   expanded: false
   loading: false
   tagName: 'li'
-  showSublist: Ember.computed 'model.children.@each.grouping', 'includeLeafs', ->
+  showSublist: Ember.computed 'includeLeafs', ->
     if @get('model.children.length') > 0
-      @get('includeLeafs') || @get('model.children.firstObject.grouping')
+      @get('includeLeafs')
     else
       true
   fetchChildren: ->
