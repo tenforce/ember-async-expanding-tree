@@ -1,10 +1,8 @@
 `import Ember from 'ember'`
 `import layout from '../templates/components/async-expanding-tree'`
 
-AsyncExpandingTreeComponent = Ember.Component.extend
-  layout,
-
-  # default configuration
+AsyncExpandingTreeComponent = Ember.Component.extend layout,
+# default configuration
   config:
     # property path to the property that should be used as label
     # e.g. model.label.en would be label.en
