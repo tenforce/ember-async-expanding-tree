@@ -1,8 +1,9 @@
 `import Ember from 'ember'`
 `import layout from '../templates/components/async-expanding-tree'`
 
-AsyncExpandingTreeComponent = Ember.Component.extend layout,
-# default configuration
+AsyncExpandingTreeComponent = Ember.Component.extend
+  layout: layout
+  # default configuration
   config:
     # property path to the property that should be used as label
     # e.g. model.label.en would be label.en
@@ -20,8 +21,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend layout,
     # route used in link-to of the node
     linkToRoute: 'concepts.show'
 
-  init: ->
-    @_super()
+  init: () ->
+    @_super(arguments)
     if @get('expandedConcepts')?.contains(@get('model.id')) and not @get('expanded')
       @toggleExpandF()
 
@@ -30,7 +31,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend layout,
   expandedConcepts: Ember.computed.alias 'config.expandedConcepts'
   showMaxChildren: Ember.computed.alias 'config.showMaxChildren'
   linkToRoute: Ember.computed.alias 'config.linkToRoute'
-  label: Ember.computed 'labelPropertyPath', ->
+  label: Ember.computed 'labelPropertyPath', 'model', ->
     @get("model.#{@get('labelPropertyPath')}")
   sortedChildren: Ember.computed.sort 'model.children', 'sortchildrenby'
   sortchildrenby: Ember.computed 'labelPropertyPath', ->
