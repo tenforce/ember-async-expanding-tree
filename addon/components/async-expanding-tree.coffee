@@ -3,6 +3,7 @@
 
 AsyncExpandingTreeComponent = Ember.Component.extend
   layout: layout
+  classNames: ["aet"]
   # default configuration
   config:
     # property path to the property that should be used as label
