@@ -53,7 +53,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend
   expanded: false
   loading: false
   tagName: 'li'
-  showSublist: Ember.computed 'config.includeLeafs', ->
+  showSublist: Ember.computed 'config.includeLeafs', 'model.children.length', ->
     if @get('model.children.length') > 0
       @get('config.includeLeafs')
     else
