@@ -9,9 +9,8 @@
 {{#if showSublist}}
     <ul class="sublist">
       {{#if expanded}}
-        {{#each child in model.children}}
-          {{#async-expanding-tree model=child config=config fetchChildrenOnInit=true}}
-          {{/async-expanding-tree}}
+        {{#each children as |child|}}
+          {{async-expanding-tree model=child config=config fetchChildrenOnInit=true}}
         {{/each}}
         {{#if showLoadMore}}
             <button class="btn btn-info btn-sm" {{action 'loadMoreChildren'}}>load more</button>
