@@ -64,9 +64,13 @@ AsyncExpandingTreeComponent = Ember.Component.extend
       @set 'loading', false
       @set 'childrenFetched', true
       if @get('model.children.length') > 0
-        @set 'children', @get('sortedChildren').slice(0, @get('showMaxChildren'))
         @set 'childrenSlice', @get('showMaxChildren')
     ).catch(=> @set 'loading', false)
+  children: Ember.computed 'sortedChildren', 'loading', 'childrenSlice', ->
+    if not @get('loading')
+      @get('sortedChildren').slice(0, @get('childrenSlice'))
+    else
+      []
   toggleExpandF: ->
     @toggleProperty('expanded')
     if @get('expanded')
