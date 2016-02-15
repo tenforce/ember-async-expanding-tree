@@ -16,7 +16,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     getChildren: (model) ->
       model.reload()
     # list of concept ids that are expanded
-    # will auto expand a node in the tree if it's id is contained in this array
+    # will auto expand a node in the tree if it's id is cont
+    # ained in this array
     expandedConcepts: []
     # max amount (n) of children to be shown before a load more button is presented
     # load more button shows an extra n children
@@ -25,6 +26,13 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     linkToRoute: 'concepts.show'
     # show nodes without children
     includeLeafs: true
+    # component to be rendered before the tree node
+    # model wil be passed to the component
+    beforeComponent: null
+    # component to be rendered after the tree node
+    # model wil be passed to the component
+    afterComponent: null
+
   fetchChildrenOnInit: false
 
   init: () ->
