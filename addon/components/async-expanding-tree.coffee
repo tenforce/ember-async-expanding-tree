@@ -22,8 +22,6 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     # max amount (n) of children to be shown before a load more button is presented
     # load more button shows an extra n children
     showMaxChildren: 50
-    # route used in link-to of the node
-    linkToRoute: 'concepts.show'
     # show nodes without children
     includeLeafs: true
     # component to be rendered before the tree node
@@ -46,7 +44,6 @@ AsyncExpandingTreeComponent = Ember.Component.extend
   getChildren: Ember.computed.alias 'config.getChildren'
   expandedConcepts: Ember.computed.alias 'config.expandedConcepts'
   showMaxChildren: Ember.computed.alias 'config.showMaxChildren'
-  linkToRoute: Ember.computed.alias 'config.linkToRoute'
   label: Ember.computed 'labelPropertyPath', 'model', ->
     @get("model.#{@get('labelPropertyPath')}")
   sortedChildren: Ember.computed.sort 'model.children', 'sortchildrenby'
