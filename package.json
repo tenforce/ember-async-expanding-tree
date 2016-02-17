@@ -1,7 +1,7 @@
 {
-  "name": "async-expanding-tree",
+  "name": "ember-async-expanding-tree",
   "version": "0.2.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "This addon provides a async-expanding-tree component for ember. It's a configurable, recursive component to display a expandable tree.  Child nodes are fetched asynchronously. ",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -15,7 +15,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Niels Vandekeybus",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
@@ -43,7 +43,6 @@
     "ember-cli-htmlbars": "^1.0.1",
     "ember-cli-babel": "^5.1.5",
     "ember-cli-coffeescript": "1.13.2"
-
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"

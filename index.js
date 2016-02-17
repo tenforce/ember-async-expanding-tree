@@ -2,5 +2,5 @@
 'use strict';
 
 module.exports = {
-  name: 'async-expanding-tree'
+  name: 'ember-async-expanding-tree'
 };

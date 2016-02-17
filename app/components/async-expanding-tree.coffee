@@ -1,1 +1,1 @@
-`export { default } from 'async-expanding-tree/components/async-expanding-tree'`
+`export { default } from 'ember-async-expanding-tree/components/async-expanding-tree'`
