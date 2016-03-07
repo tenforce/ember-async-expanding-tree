@@ -22,8 +22,6 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     # max amount (n) of children to be shown before a load more button is presented
     # load more button shows an extra n children
     showMaxChildren: 50
-    # show nodes without children
-    includeLeafs: true
     # component to be rendered before the tree node
     # model wil be passed to the component
     beforeComponent: null
@@ -58,11 +56,6 @@ AsyncExpandingTreeComponent = Ember.Component.extend
   expanded: false
   loading: false
   tagName: 'li'
-  showSublist: Ember.computed 'config.includeLeafs', 'model.children.length', ->
-    if @get('model.children.length') > 0
-      @get('config.includeLeafs')
-    else
-      true
   fetchChildren: ->
     @set('loading', true)
     @get('getChildren')(@get('model')).then(=>

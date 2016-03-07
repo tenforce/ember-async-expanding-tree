@@ -11,19 +11,18 @@
 {{#if afterComponent}}
   {{component afterComponent model=model}}
 {{/if}}
-{{#if showSublist}}
-    <ul class="sublist">
-      {{#if expanded}}
-        {{#each children as |child|}}
-          {{async-expanding-tree model=child config=config fetchChildrenOnInit=true}}
-        {{/each}}
-        {{#if showLoadMore}}
-          <div class="aet-load-more">
-            <span class="aet-shown">{{childrenSlice}}</span>
-            <span class="aet-total">{{model.children.length}}</span>
-            <button class="btn btn-info btn-sm" {{action 'loadMoreChildren'}}>load more</button>
-          </div>
-        {{/if}}
-      {{/if}}
-    </ul>
+{{#if expanded}}
+  <ul class="sublist">
+    {{#each children as |child|}}
+      {{async-expanding-tree model=child config=config fetchChildrenOnInit=true}}
+    {{/each}}
+    {{#if showLoadMore}}
+      <div class="aet-load-more">
+        <span class="aet-shown">{{childrenSlice}}</span>
+        <span class="aet-total">{{model.children.length}}</span>
+        <button class="btn btn-info btn-sm" {{action 'loadMoreChildren'}}>load more</button>
+      </div>
+    {{/if}}
+  </ul>
 {{/if}}
+
