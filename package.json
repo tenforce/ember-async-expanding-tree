@@ -16,7 +16,10 @@
     "node": ">= 0.10.0"
   },
   "author": "Niels Vandekeybus",
-  "contributors": [ "Niels Vandekeybus", "Karel Kremer" ],
+  "contributors": [
+    "Niels Vandekeybus",
+    "Karel Kremer"
+  ],
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
