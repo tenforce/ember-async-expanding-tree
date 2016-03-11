@@ -12,7 +12,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     # function that is called with the selected model when the label of the model is clicked
     onActivate: (model) ->
     # function to retrieve children of the parent object
-    # this function should return a Promise that has updated model.children when succeeded
+    # this function should return a Promise that returns the children of this item
+    # this result will be stored in _childrenCache locally in this component
     getChildren: (model) ->
       model.reload()
     # list of concept ids that are expanded
@@ -44,24 +45,25 @@ AsyncExpandingTreeComponent = Ember.Component.extend
   showMaxChildren: Ember.computed.alias 'config.showMaxChildren'
   label: Ember.computed 'labelPropertyPath', 'model', ->
     @get("model.#{@get('labelPropertyPath')}")
-  sortedChildren: Ember.computed.sort 'model.children', 'sortchildrenby'
+  sortedChildren: Ember.computed.sort '_childrenCache', 'sortchildrenby'
   sortchildrenby: Ember.computed 'labelPropertyPath', ->
     [@get('labelPropertyPath')]
   childrenFetched: false
   childrenSlice: 50
-  expandable: Ember.computed 'model.children', 'loading',  ->
-    (not @get('loading')) and @get('model.children.length')
-  showLoadMore: Ember.computed 'model.children.length', 'childrenSlice', 'loading', ->
-    (!@get('loading')) && @get('childrenSlice') < @get('model.children.length')
+  expandable: Ember.computed '_childrenCache', 'loading',  ->
+    (not @get('loading')) and @get('_childrenCache.length')
+  showLoadMore: Ember.computed '_childrenCache.length', 'childrenSlice', 'loading', ->
+    (!@get('loading')) && @get('childrenSlice') < @get('_childrenCache.length')
   expanded: false
   loading: false
   tagName: 'li'
   fetchChildren: ->
     @set('loading', true)
-    @get('getChildren')(@get('model')).then(=>
+    @get('getChildren')(@get('model')).then( (result) =>
       @set 'loading', false
       @set 'childrenFetched', true
-      if @get('model.children.length') > 0
+      @set '_childrenCache', result
+      if @get('_childrenCache.length') > 0
         @set 'childrenSlice', @get('showMaxChildren')
     ).catch(=> @set 'loading', false)
   children: Ember.computed 'sortedChildren', 'loading', 'childrenSlice', ->
@@ -82,8 +84,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     toggleExpand: ->
       @toggleExpandF()
     loadMoreChildren: ->
-      if @get('childrenSlice') + @get('showMaxChildren') > @get('model.children.length')
-        newSlice = @get('model.children.length')
+      if @get('childrenSlice') + @get('showMaxChildren') > @get('_childrenCache.length')
+        newSlice = @get('_childrenCache.length')
       else
         newSlice = @get('childrenSlice') + @get('showMaxChildren')
       extraSlice = @get('sortedChildren').slice(@get('childrenSlice'), newSlice)
