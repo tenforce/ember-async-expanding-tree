@@ -78,6 +78,9 @@ AsyncExpandingTreeComponent = Ember.Component.extend
       @get('expandedConcepts').addObject(@get('model.id'))
     else
       @get('expandedConcepts').removeObject(@get('model.id'))
+  configObserver: Ember.observer 'config', 'config.fetchChildren', ->
+    @get 'config.fetchChildren'
+    @fetchChildren()
   actions:
     clickItem: ->
       @get('config.onActivate')?(@get('model'))

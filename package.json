@@ -1,6 +1,6 @@
 {
   "name": "ember-async-expanding-tree",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "This addon provides a async-expanding-tree component for ember. It's a configurable, recursive component to display a expandable tree.  Child nodes are fetched asynchronously. ",
   "directories": {
     "doc": "doc",
@@ -16,6 +16,7 @@
     "node": ">= 0.10.0"
   },
   "author": "Niels Vandekeybus",
+  "contributors": [ "Niels Vandekeybus", "Karel Kremer" ],
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
