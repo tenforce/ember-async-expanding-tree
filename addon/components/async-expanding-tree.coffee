@@ -43,6 +43,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend
   getChildren: Ember.computed.alias 'config.getChildren'
   expandedConcepts: Ember.computed.alias 'config.expandedConcepts'
   showMaxChildren: Ember.computed.alias 'config.showMaxChildren'
+  beforeComponent: Ember.computed.alias 'config.beforeComponent'
+  afterComponent: Ember.computed.alias 'config.afterComponent'
   label: Ember.computed 'labelPropertyPath', 'model', ->
     @get("model.#{@get('labelPropertyPath')}")
   sortedChildren: Ember.computed.sort '_childrenCache', 'sortchildrenby'
