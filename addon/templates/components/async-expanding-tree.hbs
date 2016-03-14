@@ -7,7 +7,11 @@
 {{#if loading}}
     <i class="fa fa-circle-o-notch fa-spin"></i>
 {{/if}}
-<span {{action 'clickItem' model}}>{{label}}</span>
+{{#if (and label.then (is-pending label))}}
+  <span {{action 'clickItem' model}}>Loading...</span>
+{{else}}
+  <span {{action 'clickItem' model}}>{{if label.then (await label) label}}</span>
+{{/if}}
 {{#if afterComponent}}
   {{component afterComponent model=model}}
 {{/if}}
