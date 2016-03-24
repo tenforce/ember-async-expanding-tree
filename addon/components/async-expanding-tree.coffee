@@ -4,6 +4,9 @@
 AsyncExpandingTreeComponent = Ember.Component.extend
   layout: layout
   classNames: ["aet"]
+  classNameBindings: ["currentSelected:selected"]
+  # an array (as per Ember.isArray) of identifier or a single identifier of the selected item(s)
+  selected: null
   # default configuration
   config:
     # property path to the property that should be used as label
@@ -81,6 +84,13 @@ AsyncExpandingTreeComponent = Ember.Component.extend
   configObserver: Ember.observer 'config', 'config.fetchChildren', ->
     @get 'config.fetchChildren'
     @fetchChildren()
+  currentSelected: Ember.computed 'model.id', 'selected', ->
+    selected = @get('selected')
+    id = @get('model.id')
+    if Ember.isArray(selected)
+      selected?.contains(id)
+    else
+      selected == id
   actions:
     clickItem: ->
       @get('config.onActivate')?(@get('model'))

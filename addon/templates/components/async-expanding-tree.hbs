@@ -18,7 +18,7 @@
 {{#if expanded}}
   <ul class="sublist">
     {{#each children as |child|}}
-      {{async-expanding-tree model=child config=config fetchChildrenOnInit=true}}
+      {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected}}
     {{/each}}
     {{#if showLoadMore}}
       <div class="aet-load-more">
