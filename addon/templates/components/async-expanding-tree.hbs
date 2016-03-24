@@ -1,20 +1,22 @@
-{{#if beforeComponent}}
-  {{component beforeComponent model=model}}
-{{/if}}
-{{#if expandable}}
-    <div class="{{if expanded 'aet-expanded' 'aet-collapsed'}}" {{action 'toggleExpand'}}></div>
-{{/if}}
-{{#if loading}}
-    <i class="fa fa-circle-o-notch fa-spin"></i>
-{{/if}}
-{{#if (and label.then (is-pending label))}}
-  <span {{action 'clickItem' model}}>Loading...</span>
-{{else}}
-  <span {{action 'clickItem' model}}>{{if label.then (await label) label}}</span>
-{{/if}}
-{{#if afterComponent}}
-  {{component afterComponent model=model}}
-{{/if}}
+<div class="aet-node">
+  {{#if beforeComponent}}
+    {{component beforeComponent model=model}}
+  {{/if}}
+  {{#if expandable}}
+      <div class="{{if expanded 'aet-expanded' 'aet-collapsed'}}" {{action 'toggleExpand'}}></div>
+  {{/if}}
+  {{#if loading}}
+      <i class="fa fa-circle-o-notch fa-spin"></i>
+  {{/if}}
+  {{#if (and label.then (is-pending label))}}
+      <span {{action 'clickItem' model}}>Loading...</span>
+  {{else}}
+      <span {{action 'clickItem' model}}>{{if label.then (await label) label}}</span>
+  {{/if}}
+  {{#if afterComponent}}
+    {{component afterComponent model=model}}
+  {{/if}}
+</div>
 {{#if expanded}}
   <ul class="sublist">
     {{#each children as |child|}}
