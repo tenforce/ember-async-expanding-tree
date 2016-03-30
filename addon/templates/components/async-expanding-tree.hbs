@@ -2,20 +2,22 @@
   {{#if expandable}}
       <div class="{{if expanded 'aet-expanded' 'aet-collapsed'}}" {{action 'toggleExpand'}}></div>
   {{/if}}
-  {{#if loading}}
-      <i class="fa fa-circle-o-notch fa-spin"></i>
-  {{/if}}
-  {{#if beforeComponent}}
-    {{component beforeComponent model=model}}
-  {{/if}}
-  {{#if (and label.then (is-pending label))}}
-      <label {{action 'clickItem' model}}>Loading...</label>
-  {{else}}
-      <label {{action 'clickItem' model}}>{{if label.then (await label) label}}</label>
-  {{/if}}
-  {{#if afterComponent}}
-    {{component afterComponent model=model}}
-  {{/if}}
+  <div>
+      {{#if loading}}
+          <i class="fa fa-circle-o-notch fa-spin"></i>
+      {{/if}}
+      {{#if beforeComponent}}
+        {{component beforeComponent model=model}}
+      {{/if}}
+      {{#if (and label.then (is-pending label))}}
+          <label {{action 'clickItem' model}}>Loading...</label>
+      {{else}}
+          <label {{action 'clickItem' model}}>{{if label.then (await label) label}}</label>
+      {{/if}}
+      {{#if afterComponent}}
+        {{component afterComponent model=model}}
+      {{/if}}
+  </div>
 </div>
 {{#if expanded}}
   <ul class="sublist">
@@ -31,4 +33,3 @@
     {{/if}}
   </ul>
 {{/if}}
-
