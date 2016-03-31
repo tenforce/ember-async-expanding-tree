@@ -2,10 +2,10 @@
   {{#if expandable}}
       <div class="{{if expanded 'aet-expanded' 'aet-collapsed'}}" {{action 'toggleExpand'}}></div>
   {{/if}}
-  <div>
-      {{#if loading}}
-          <i class="fa fa-circle-o-notch fa-spin"></i>
-      {{/if}}
+  {{#if loading}}
+      <i class="fa fa-circle-o-notch fa-spin"></i>
+  {{/if}}
+    <div class="aet-label">
       {{#if beforeComponent}}
         {{component beforeComponent model=model}}
       {{/if}}
@@ -17,19 +17,20 @@
       {{#if afterComponent}}
         {{component afterComponent model=model}}
       {{/if}}
-  </div>
+    </div>
 </div>
 {{#if expanded}}
-  <ul class="sublist">
-    {{#each children as |child|}}
-      {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected}}
-    {{/each}}
-    {{#if showLoadMore}}
-      <div class="aet-load-more">
-        <span class="aet-shown">{{childrenSlice}}</span>
-        <span class="aet-total">{{model.children.length}}</span>
-        <button class="btn btn-info btn-sm" {{action 'loadMoreChildren'}}>load more</button>
-      </div>
-    {{/if}}
-  </ul>
+    <ul class="sublist">
+      {{#each children as |child|}}
+        {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected}}
+      {{/each}}
+      {{#if showLoadMore}}
+          <div class="aet-load-more">
+              <span class="aet-shown">{{childrenSlice}}</span>
+              <span class="aet-total">{{model.children.length}}</span>
+              <button class="btn btn-info btn-sm" {{action 'loadMoreChildren'}}>load more</button>
+          </div>
+      {{/if}}
+    </ul>
 {{/if}}
+
