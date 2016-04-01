@@ -5,30 +5,32 @@
   {{#if loading}}
       <i class="fa fa-circle-o-notch fa-spin"></i>
   {{/if}}
-  {{#if beforeComponent}}
-    {{component beforeComponent model=model config=config}}
-  {{/if}}
-  {{#if (and label.then (is-pending label))}}
+  <div class="aet-label">
+    {{#if beforeComponent}}
+      {{component beforeComponent model=model config=config}}
+    {{/if}}
+    {{#if (and label.then (is-pending label))}}
       <label {{action 'clickItem' model}}>Loading...</label>
-  {{else}}
+    {{else}}
       <label {{action 'clickItem' model}}>{{if label.then (await label) label}}</label>
-  {{/if}}
-  {{#if afterComponent}}
-    {{component afterComponent model=model config=config}}
-  {{/if}}
+    {{/if}}
+    {{#if afterComponent}}
+      {{component afterComponent model=model config=config}}
+    {{/if}}
+  </div>
 </div>
 {{#if expanded}}
-  <ul class="sublist">
-    {{#each children as |child|}}
-      {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected}}
-    {{/each}}
-    {{#if showLoadMore}}
-      <div class="aet-load-more">
-        <span class="aet-shown">{{childrenSlice}}</span>
-        <span class="aet-total">{{model.children.length}}</span>
-        <button class="btn btn-info btn-sm" {{action 'loadMoreChildren'}}>load more</button>
-      </div>
-    {{/if}}
-  </ul>
+    <ul class="sublist">
+      {{#each children as |child|}}
+        {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected}}
+      {{/each}}
+      {{#if showLoadMore}}
+          <div class="aet-load-more">
+              <span class="aet-shown">{{childrenSlice}}</span>
+              <span class="aet-total">{{model.children.length}}</span>
+              <button class="btn btn-info btn-sm" {{action 'loadMoreChildren'}}>load more</button>
+          </div>
+      {{/if}}
+    </ul>
 {{/if}}
 
