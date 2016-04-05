@@ -4,7 +4,7 @@
 AsyncExpandingTreeComponent = Ember.Component.extend
   layout: layout
   classNames: ["aet"]
-  classNameBindings: ["currentSelected:selected"]
+  classNameBindings: ["currentSelected:selected", "leafNode:leaf"]
   # an array (as per Ember.isArray) of identifier or a single identifier of the selected item(s)
   selected: null
   # default configuration
@@ -42,6 +42,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     if @get('expandedConcepts')?.contains(@get('model.id')) and not @get('expanded')
       @toggleExpandF()
 
+  leafNode: Ember.computed '_childrenCache', 'loading',  ->
+    (not @get('loading')) and not @get('_childrenCache.length')
   labelPropertyPath: Ember.computed.alias 'config.labelPropertyPath'
   getChildren: Ember.computed.alias 'config.getChildren'
   expandedConcepts: Ember.computed.alias 'config.expandedConcepts'
