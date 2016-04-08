@@ -5,14 +5,14 @@
   {{#if loading}}
       <i class="fa fa-circle-o-notch fa-spin"></i>
   {{/if}}
-  <div class="aet-label">
+  <div class="aet-label" {{action 'clickItem' model}}>
     {{#if beforeComponent}}
       {{component beforeComponent model=model config=config}}
     {{/if}}
     {{#if (and label.then (is-pending label))}}
-      <label {{action 'clickItem' model}}>Loading...</label>
+      <label>Loading...</label>
     {{else}}
-      <label {{action 'clickItem' model}}>{{if label.then (await label) label}}</label>
+      <label>{{if label.then (await label) label}}</label>
     {{/if}}
     {{#if afterComponent}}
       {{component afterComponent model=model config=config}}
