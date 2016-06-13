@@ -44,3 +44,28 @@ specify your own config to customize the functionality of the tree:
 
 if necessary, the component can fetch the children of the model on init
 `{{async-expanding-tree model=topNode config=config fetchChildrenOnInit=true}}`
+
+you can also specify tooltips for the node, the expander button, the label or the load more button.
+to do this, add one or more of these functions to the config 
+```
+config:
+  getTooltipNode: (level) ->
+      if level is 0 then 'first level'
+      else then 'other levels'
+  getTooltipExpander: (level) ->
+      if level is 0 then 'first level'
+      else then 'other levels'
+  getTooltipLabel: (level) ->
+      if level is 0 then 'first level'
+      else then 'other levels'
+  getTooltipLoadMore: (level) ->
+    if level is 0 then 'first level'
+    else then 'other levels'
+```
+
+you can also specify whether you want the children to display tooltips or whether you want the default values to be used
+```
+config:
+  showChildrenTooltips: false
+  showDefaultTooltips: false
+```
