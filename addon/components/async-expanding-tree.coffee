@@ -5,33 +5,37 @@ AsyncExpandingTreeComponent = Ember.Component.extend
   layout: layout
   classNames: ["aet"]
   classNameBindings: ["currentSelected:selected", "leafNode:leaf"]
-  # an array (as per Ember.isArray) of identifier or a single identifier of the selected item(s)
+# an array (as per Ember.isArray) of identifier or a single identifier of the selected item(s)
   selected: null
-  # default configuration
+# default configuration
   config:
-    # property path to the property that should be used as label
-    # e.g. model.label.en would be label.en
+# property path to the property that should be used as label
+# e.g. model.label.en would be label.en
     labelPropertyPath: 'label'
-    # function that is called with the selected model when the label of the model is clicked
+# function that is called with the selected model when the label of the model is clicked
     onActivate: (model) ->
-    # function to retrieve children of the parent object
-    # this function should return a Promise that returns the children of this item
-    # this result will be stored in _childrenCache locally in this component
+# function to retrieve children of the parent object
+# this function should return a Promise that returns the children of this item
+# this result will be stored in _childrenCache locally in this component
     getChildren: (model) ->
       model.reload()
-    # list of concept ids that are expanded
-    # will auto expand a node in the tree if it's id is cont
-    # ained in this array
+# list of concept ids that are expanded
+# will auto expand a node in the tree if it's id is cont
+# ained in this array
     expandedConcepts: []
-    # max amount (n) of children to be shown before a load more button is presented
-    # load more button shows an extra n children
+# max amount (n) of children to be shown before a load more button is presented
+# load more button shows an extra n children
     showMaxChildren: 50
-    # component to be rendered before the tree node
-    # model wil be passed to the component
+# component to be rendered before the tree node
+# model wil be passed to the component
     beforeComponent: null
-    # component to be rendered after the tree node
-    # model wil be passed to the component
+# component to be rendered after the tree node
+# model wil be passed to the component
     afterComponent: null
+# whether the children of the tree should display the tooltips
+    inheritTooltips: true
+# whether default tooltips should be displayed if none are present
+    showDefaultTooltips: false
 
   fetchChildrenOnInit: false
 
@@ -109,5 +113,39 @@ AsyncExpandingTreeComponent = Ember.Component.extend
       @get('children').pushObjects(extraSlice)
       @set('childrenSlice', newSlice)
 
+# current level of the tree #
+  level: 0
+  nextLevel: Ember.computed 'level', ->
+    @get('level')+1
+# decides whether the children of the tree should display their tooltips
+  shouldDisplayTooltip: Ember.computed 'level', 'inheritTooltips', ->
+    if @get('level') is 0 then return true
+    else unless @get('inheritTooltips') is false then return true
+    else return false
+# override those if you want default values
+  defaultTooltipNode: undefined
+  defaultTooltipExpander: undefined
+  defaultTooltipLabel: undefined
+  defaultTooltipLoadMore: undefined
+
+# the different tooltips
+  tooltipNode: Ember.computed 'config.tooltipNode', ->
+    @getTooltip('config.getTooltipNode', 'defaultTooltipNode')
+  tooltipExpander: Ember.computed 'config.tooltipExpander', ->
+    @getTooltip('config.getTooltipExpander', 'defaultTooltipExpander')
+  tooltipLabel: Ember.computed 'config.tooltipLabel', ->
+    @getTooltip('config.getTooltipLabel', 'defaultTooltipLabel')
+  tooltipLoadMore: Ember.computed 'config.tooltipLoadMore', ->
+    @getTooltip('config.getTooltipLoadMore', 'defaultTooltipLoadMore')
+  getTooltip: (tooltipName, defaultName) ->
+    if @get 'shouldDisplayTooltip'
+      tooltip = @get(tooltipName)?(@get('level'))
+      if tooltip
+        tooltip
+      else unless @get('showDefaultTooltips') is false then return @get(defaultName)
+# by default when not specified, is considered true
+  inheritTooltips: Ember.computed.alias 'config.inheritTooltips'
+# by default when not specified, is considered true
+  showDefaultTooltips: Ember.computed.alias 'config.showDefaultTooltips'
 
 `export default AsyncExpandingTreeComponent`

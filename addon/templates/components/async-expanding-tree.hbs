@@ -1,31 +1,31 @@
-<div class="aet-node">
+<div class="aet-node" title={{tooltipNode}}>
   {{#if expandable}}
-      <div class="{{if expanded 'aet-expanded' 'aet-collapsed'}}" {{action 'toggleExpand'}}></div>
+      <div class="{{if expanded 'aet-expanded' 'aet-collapsed'}}" {{action 'toggleExpand'}} title={{tooltipExpander}}></div>
   {{/if}}
   {{#if loading}}
       <i class="fa fa-circle-o-notch fa-spin"></i>
   {{/if}}
-  <div class="aet-label" {{action 'clickItem' model}}>
-    {{#if beforeComponent}}
-      {{component beforeComponent model=model config=config}}
-    {{/if}}
-    {{#if (and label.then (is-pending label))}}
-      <label>Loading...</label>
-    {{else}}
-      <label>{{if label.then (await label) label}}</label>
-    {{/if}}
-    {{#if afterComponent}}
-      {{component afterComponent model=model config=config}}
-    {{/if}}
-  </div>
+    <div class="aet-label" {{action 'clickItem' model}} title={{tooltipLabel}}>
+      {{#if beforeComponent}}
+        {{component beforeComponent model=model config=config}}
+      {{/if}}
+      {{#if (and label.then (is-pending label))}}
+          <label>Loading...</label>
+      {{else}}
+          <label>{{if label.then (await label) label}}</label>
+      {{/if}}
+      {{#if afterComponent}}
+        {{component afterComponent model=model config=config}}
+      {{/if}}
+    </div>
 </div>
 {{#if expanded}}
     <ul class="sublist">
       {{#each children as |child|}}
-        {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected}}
+        {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected level=nextLevel}}
       {{/each}}
       {{#if showLoadMore}}
-          <div class="aet-load-more">
+          <div class="aet-load-more" title={{tooltipLoadMore}}>
               <span class="aet-shown">{{childrenSlice}}</span>
               <span class="aet-total">{{model.children.length}}</span>
               <button class="btn btn-info btn-sm" {{action 'loadMoreChildren'}}>load more</button>
