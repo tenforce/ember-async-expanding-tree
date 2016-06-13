@@ -33,7 +33,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend
 # model wil be passed to the component
     afterComponent: null
 # whether the children of the tree should display the tooltips
-    inheritTooltips: true
+    showChildrenTooltips: true
 # whether default tooltips should be displayed if none are present
     showDefaultTooltips: false
 
@@ -118,15 +118,15 @@ AsyncExpandingTreeComponent = Ember.Component.extend
   nextLevel: Ember.computed 'level', ->
     @get('level')+1
 # decides whether the children of the tree should display their tooltips
-  shouldDisplayTooltip: Ember.computed 'level', 'inheritTooltips', ->
+  shouldDisplayTooltip: Ember.computed 'level', 'showChildrenTooltips', ->
     if @get('level') is 0 then return true
-    else unless @get('inheritTooltips') is false then return true
+    else unless @get('showChildrenTooltips') is false then return true
     else return false
 # override those if you want default values
   defaultTooltipNode: undefined
-  defaultTooltipExpander: undefined
+  defaultTooltipExpander: 'Click to expand'
   defaultTooltipLabel: undefined
-  defaultTooltipLoadMore: undefined
+  defaultTooltipLoadMore: 'Load more'
 
 # the different tooltips
   tooltipNode: Ember.computed 'config.tooltipNode', ->
@@ -144,7 +144,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend
         tooltip
       else unless @get('showDefaultTooltips') is false then return @get(defaultName)
 # by default when not specified, is considered true
-  inheritTooltips: Ember.computed.alias 'config.inheritTooltips'
+  showChildrenTooltips: Ember.computed.alias 'config.showChildrenTooltips'
 # by default when not specified, is considered true
   showDefaultTooltips: Ember.computed.alias 'config.showDefaultTooltips'
 
