@@ -76,7 +76,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend
       @set '_childrenCache', result
       if @get('_childrenCache.length') > 0
         @set 'childrenSlice', @get('showMaxChildren')
-    ).catch(=> @set 'loading', false)
+    ).catch(=> unless @get('isDestroyed') then @set 'loading', false)
   children: Ember.computed 'sortedChildren', 'loading', 'childrenSlice', ->
     if not @get('loading')
       @get('sortedChildren').slice(0, @get('childrenSlice'))
