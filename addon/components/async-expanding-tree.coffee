@@ -1,7 +1,15 @@
 `import Ember from 'ember'`
 `import layout from '../templates/components/async-expanding-tree'`
+`import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';`
 
-AsyncExpandingTreeComponent = Ember.Component.extend
+AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
+  keyboardShortcuts:
+    'shift':
+      action: 'shift'
+      global: false
+    'ctrl+q':
+      action: 'ctrlq'
+      global: false
   layout: layout
   classNames: ["aet"]
   classNameBindings: ["currentSelected:selected", "leafNode:leaf"]
@@ -65,7 +73,6 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     (not @get('loading')) and @get('_childrenCache.length')
   showLoadMore: Ember.computed '_childrenCache.length', 'childrenSlice', 'loading', ->
     (!@get('loading')) && @get('childrenSlice') < @get('_childrenCache.length')
-  expanded: false
   loading: false
   tagName: 'li'
   fetchChildren: ->
@@ -99,19 +106,11 @@ AsyncExpandingTreeComponent = Ember.Component.extend
       selected?.contains(id)
     else
       selected == id
-  actions:
-    clickItem: ->
-      @get('config.onActivate')?(@get('model'))
-    toggleExpand: ->
-      @toggleExpandF()
-    loadMoreChildren: ->
-      if @get('childrenSlice') + @get('showMaxChildren') > @get('_childrenCache.length')
-        newSlice = @get('_childrenCache.length')
-      else
-        newSlice = @get('childrenSlice') + @get('showMaxChildren')
-      extraSlice = @get('sortedChildren').slice(@get('childrenSlice'), newSlice)
-      @get('children').pushObjects(extraSlice)
-      @set('childrenSlice', newSlice)
+
+  shouldExpandChildren: false
+  inheritedExpanded: false
+  expanded: Ember.computed 'inheritedExpanded', ->
+    @get ('inheritedExpanded')
 
 # current level of the tree #
   level: 0
@@ -147,5 +146,31 @@ AsyncExpandingTreeComponent = Ember.Component.extend
   showChildrenTooltips: Ember.computed.alias 'config.showChildrenTooltips'
 # by default when not specified, is considered true
   showDefaultTooltips: Ember.computed.alias 'config.showDefaultTooltips'
+
+  actions:
+    ctrlq: ->
+      console.log "ctrlq"
+      if @get('currentSelected')
+        @set('shouldExpandChildren', true)
+        @toggleExpandF()
+    shift: ->
+      console.log "shift"
+      if @get('currentSelected')
+        # Uncomment if we want to open only one level, even if it has been opened before #
+        ###@set('shouldExpandChildren', false)###
+        @toggleExpandF()
+    clickItem: ->
+      @get('config.onActivate')?(@get('model'))
+    toggleExpand: ->
+      @toggleExpandF()
+    loadMoreChildren: ->
+      if @get('childrenSlice') + @get('showMaxChildren') > @get('_childrenCache.length')
+        newSlice = @get('_childrenCache.length')
+      else
+        newSlice = @get('childrenSlice') + @get('showMaxChildren')
+      extraSlice = @get('sortedChildren').slice(@get('childrenSlice'), newSlice)
+      @get('children').pushObjects(extraSlice)
+      @set('childrenSlice', newSlice)
+
 
 `export default AsyncExpandingTreeComponent`
