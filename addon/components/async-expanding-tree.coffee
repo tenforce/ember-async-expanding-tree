@@ -152,7 +152,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
       console.log "ctrlq"
       if @get('currentSelected')
         @set('shouldExpandChildren', true)
-        @toggleExpandF()
+        unless @get('expanded')
+          @toggleExpandF()
     shift: ->
       console.log "shift"
       if @get('currentSelected')
