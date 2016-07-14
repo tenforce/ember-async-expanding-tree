@@ -9,7 +9,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
       action: 'expand'
       global: false
     # expand children #
-    'alt+<':
+    'alt+e':
       action: 'expandChildren'
       global: false
   layout: layout
