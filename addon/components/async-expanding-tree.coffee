@@ -9,9 +9,10 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
       action: 'expand'
       global: false
     # expand children #
-    'alt+e':
+    'ctrl+alt+e':
       action: 'expandChildren'
       global: false
+      preventDefault:true
   layout: layout
   classNames: ["aet"]
   classNameBindings: ["currentSelected:selected", "leafNode:leaf"]
@@ -155,6 +156,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
         @set('shouldExpandChildren', true)
         unless @get('expanded')
           @toggleExpandF()
+      false
     expand: ->
       if @get('currentSelected')
         # Uncomment if we want to open only one level, even if it has been opened before #
