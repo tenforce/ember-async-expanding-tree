@@ -4,11 +4,13 @@
 
 AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
   keyboardShortcuts:
+    # open / close current nod #
     'shift':
-      action: 'shift'
+      action: 'expand'
       global: false
-    'ctrl+q':
-      action: 'ctrlq'
+    # expand children #
+    'alt+<':
+      action: 'expandChildren'
       global: false
   layout: layout
   classNames: ["aet"]
@@ -148,14 +150,12 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
   showDefaultTooltips: Ember.computed.alias 'config.showDefaultTooltips'
 
   actions:
-    ctrlq: ->
-      console.log "ctrlq"
+    expandChildren: ->
       if @get('currentSelected')
         @set('shouldExpandChildren', true)
         unless @get('expanded')
           @toggleExpandF()
-    shift: ->
-      console.log "shift"
+    expand: ->
       if @get('currentSelected')
         # Uncomment if we want to open only one level, even if it has been opened before #
         ###@set('shouldExpandChildren', false)###
