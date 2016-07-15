@@ -118,9 +118,22 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
     selected = @get('selected')
     id = @get('model.id')
     if Ember.isArray(selected)
-      selected?.contains(id)
+      if selected?.contains(id)
+        @scrollToSelected()
+        return true
     else
-      selected == id
+      if selected == id
+        @scrollToSelected()
+        return true
+    return false
+
+  scrollToSelected: () ->
+    Ember.run.later ->
+      $('html, body').stop().animate(
+        {'scrollTop': $('.selected').children('.aet-node').children('.aet-label').children('label').offset().top-250},
+        900,
+        'swing'
+      )
 
   shouldExpandChildren: false
   inheritedExpanded: false
