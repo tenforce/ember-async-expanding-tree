@@ -22,12 +22,14 @@
 </div>
 {{#if expanded}}
     <ul class="sublist">
-      {{#each children as |child|}}
+      {{#each children as |child index|}}
         {{#if shouldExpandChildren}}
           {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected level=nextLevel
-          inheritedExpanded=true shouldExpandChildren=true}}
+          inheritedExpanded=true shouldExpandChildren=true selectParent="selectParent" selectOlderBrother="selectOlderBrother"
+          selectYoungerBrother="selectYoungerBrother" index=index}}
         {{else}}
-          {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected level=nextLevel}}
+          {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected level=nextLevel
+          selectParent="selectParent" selectOlderBrother="selectOlderBrother" selectYoungerBrother="selectYoungerBrother" index=index}}
         {{/if}}
       {{/each}}
       {{#if showLoadMore}}

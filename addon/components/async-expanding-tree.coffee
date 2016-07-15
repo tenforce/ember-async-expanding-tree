@@ -13,6 +13,18 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
       action: 'expandChildren'
       global: false
       preventDefault:true
+    'right':
+      action: 'right'
+      global: false
+    'left':
+      action: 'left'
+      global: false
+    'up':
+      action: 'up'
+      global: false
+    'down':
+      action: 'down'
+      global: false
   layout: layout
   classNames: ["aet"]
   classNameBindings: ["currentSelected:selected", "leafNode:leaf"]
@@ -151,6 +163,29 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
   showDefaultTooltips: Ember.computed.alias 'config.showDefaultTooltips'
 
   actions:
+    right: ->
+      if @get('currentSelected')
+        unless @get('expanded')
+          @toggleExpandF()
+        child = this.get('children')[0]?.get('id')
+        if child then @get('config.onActivate')?(child)
+    left: ->
+      if @get('currentSelected')
+        @sendAction('selectParent')
+    selectParent: ->
+      @get('config.onActivate')?(@get('model'))
+    up: ->
+      if @get('currentSelected')
+        @sendAction('selectOlderBrother', @get('index'))
+    selectOlderBrother: (index) ->
+      child = this.get('children')[index-1]?.get('id')
+      if child then @get('config.onActivate')?(child)
+    down: ->
+      if @get('currentSelected')
+        @sendAction('selectYoungerBrother', @get('index'))
+    selectYoungerBrother: (index) ->
+      child = this.get('children')[index+1]?.get('id')
+      if child then @get('config.onActivate')?(child)
     expandChildren: ->
       if @get('currentSelected')
         @set('shouldExpandChildren', true)
