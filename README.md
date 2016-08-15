@@ -22,7 +22,8 @@ specify your own config to customize the functionality of the tree:
     # function that is called with the selected model when the label of the model is clicked
     onActivate: (model) ->
     # function to retrieve children of the parent object
-    # this function should return a Promise that has updated model.children when succeeded
+    # this function should return a Promise that resolves with the children of the given model 
+    # as Ember Models.
     getChildren: (model) ->
       model.reload()
     # list of concept ids that are expanded
