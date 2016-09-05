@@ -79,7 +79,12 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
   afterComponent: Ember.computed.alias 'config.afterComponent'
   label: Ember.computed 'labelPropertyPath', 'model', ->
     @get("model.#{@get('labelPropertyPath')}")
-  sortedChildren: Ember.computed.sort '_childrenCache', 'sortchildrenby'
+  sortedChildren: []
+  childrenSorter: Ember.observer '_childrenCache', 'sortchildrenby', ( ->
+    cached = @get '_childrenCache'
+    @sortByPromise(cached, @get('sortchildrenby')).then (result) =>
+      @set 'sortedChildren', result
+  ).on('init')
   sortchildrenby: Ember.computed 'labelPropertyPath', ->
     [@get('labelPropertyPath')]
   childrenFetched: false
@@ -225,5 +230,25 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
       @get('children').pushObjects(extraSlice)
       @set('childrenSlice', newSlice)
 
+  sortByPromise: (list, path) ->
+    unless Ember.isArray(path)
+      path = [path]
+    if not list
+      return new Ember.RSVP.Promise (resolve) -> resolve(list)
+
+    promises = list.map (item) ->
+      hash = {}
+      path.map (key) ->
+        hash[key] = new Ember.RSVP.Promise (resolve) -> resolve(Ember.get(item, key))
+      Ember.RSVP.hash hash
+    Ember.RSVP.all(promises).then (resolutions) ->
+      toSort = resolutions.map (solutions, index) ->
+        result = { _sorterItem: list.objectAt(index) }
+        for key, solution of solutions
+          result[key] = solution
+        result
+      sorted = toSort.sortBy.apply toSort, path
+      sorted.map (item) ->
+        item._sorterItem
 
 `export default AsyncExpandingTreeComponent`
