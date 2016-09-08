@@ -133,6 +133,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
     return false
 
   scrollToSelected: () ->
+    if @get 'config.noScroll'
+      return
     Ember.run.later ->
       $('html, body').stop().animate(
         {'scrollTop': $('.selected').children('.aet-node').children('.aet-label').children('label').offset().top-250},
