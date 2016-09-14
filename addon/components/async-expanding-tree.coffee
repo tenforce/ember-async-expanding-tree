@@ -59,6 +59,8 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
     showChildrenTooltips: true
 # whether default tooltips should be displayed if none are present
     showDefaultTooltips: false
+# sort order as an array [ 'property1', 'thenproperty2' ]
+    sortBy: null
 
   fetchChildrenOnInit: false
 
@@ -85,8 +87,12 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
     @sortByPromise(cached, @get('sortchildrenby')).then (result) =>
       @set 'sortedChildren', result
   ).on('init')
-  sortchildrenby: Ember.computed 'labelPropertyPath', ->
-    [@get('labelPropertyPath')]
+  sortchildrenby: Ember.computed 'labelPropertyPath', 'config.sortBy', ->
+    sortBy = @get 'config.sortBy'
+    if sortBy
+      sortBy
+    else
+      [@get('labelPropertyPath')]
   childrenFetched: false
   childrenSlice: 50
   expandable: Ember.computed '_childrenCache', 'loading',  ->
