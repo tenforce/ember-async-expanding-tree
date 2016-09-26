@@ -3,28 +3,32 @@
 `import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';`
 
 AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
-  keyboardShortcuts:
-    # open / close current nod #
-    'shift':
-      action: 'expand'
-      global: false
-    # expand children #
-    'ctrl+alt+e':
-      action: 'expandChildren'
-      global: false
-      preventDefault:true
-    'right':
-      action: 'right'
-      global: false
-    'left':
-      action: 'left'
-      global: false
-    'up':
-      action: 'up'
-      global: false
-    'down':
-      action: 'down'
-      global: false
+  keyboardShortcuts: Ember.computed 'disabledShortcuts', ->
+    if @get('disabledShortcuts') then return {}
+    else
+      {
+        # open / close current nod #
+        'shift':
+          action: 'expand'
+          global: false
+        # expand children #
+        'ctrl+alt+e':
+          action: 'expandChildren'
+          global: false
+          preventDefault: true
+        'right':
+          action: 'right'
+          global: false
+        'left':
+          action: 'left'
+          global: false
+        'up':
+          action: 'up'
+          global: false
+        'down':
+          action: 'down'
+          global: false
+      }
   layout: layout
   classNames: ["aet"]
   classNameBindings: ["currentSelected:selected", "leafNode:leaf"]

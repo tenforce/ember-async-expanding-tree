@@ -26,10 +26,10 @@
         {{#if shouldExpandChildren}}
           {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected level=nextLevel
           inheritedExpanded=true shouldExpandChildren=true selectParent="selectParent" selectOlderBrother="selectOlderBrother"
-          selectYoungerBrother="selectYoungerBrother" index=index}}
+          selectYoungerBrother="selectYoungerBrother" index=index disableShortcuts=disableShortcuts}}
         {{else}}
           {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected level=nextLevel
-          selectParent="selectParent" selectOlderBrother="selectOlderBrother" selectYoungerBrother="selectYoungerBrother" index=index}}
+          selectParent="selectParent" selectOlderBrother="selectOlderBrother" selectYoungerBrother="selectYoungerBrother" index=index disableShortcuts=disableShortcuts}}
         {{/if}}
       {{/each}}
       {{#if showLoadMore}}
