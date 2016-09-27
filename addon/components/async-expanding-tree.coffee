@@ -191,7 +191,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
       if @get('currentSelected')
         unless @get('expanded')
           @toggleExpandF()
-        child = this.get('children')[0]?.get('id')
+        child = this.get('children')[0]
         if child then @get('config.onActivate')?(child)
     left: ->
       if @get('currentSelected')
@@ -202,14 +202,14 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
       if @get('currentSelected')
         @sendAction('selectOlderBrother', @get('index'))
     selectOlderBrother: (index) ->
-      child = this.get('children')[index-1]?.get('id')
+      child = this.get('children')[index-1]
       if child then @get('config.onActivate')?(child)
       else @get('config.onActivate')?(@get('model'))
     down: ->
       if @get('currentSelected')
         @sendAction('selectYoungerBrother', @get('index'))
     selectYoungerBrother: (index) ->
-      child = this.get('children')[index+1]?.get('id')
+      child = this.get('children')[index+1]
       if child then @get('config.onActivate')?(child)
       else @sendAction('selectYoungerBrother', @get('index'))
     expandChildren: ->
