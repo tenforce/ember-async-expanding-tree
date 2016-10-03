@@ -90,6 +90,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
     cached = @get '_childrenCache'
     # don't bother sorting unless expanded
     if not @get 'expanded'
+      @set 'sortedChildren', cached
       return cached
     @sortByPromise(cached, @get('sortchildrenby')).then (result) =>
       @set 'sortedChildren', result
@@ -118,8 +119,9 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
         @set 'childrenSlice', @get('showMaxChildren')
     ).catch(=> unless @get('isDestroyed') then @set 'loading', false)
   children: Ember.computed 'sortedChildren', 'loading', 'childrenSlice', ->
-    if not @get('loading')
-      @get('sortedChildren').slice(0, @get('childrenSlice'))
+    sorted = @get('sortedChildren')
+    if not @get('loading') and sorted
+      sorted.slice(0, @get('childrenSlice'))
     else
       []
   toggleExpandF: ->
