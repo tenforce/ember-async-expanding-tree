@@ -86,8 +86,11 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
   label: Ember.computed 'labelPropertyPath', 'model', ->
     @get("model.#{@get('labelPropertyPath')}")
   sortedChildren: []
-  childrenSorter: Ember.observer '_childrenCache', 'sortchildrenby', ( ->
+  childrenSorter: Ember.observer '_childrenCache', 'sortchildrenby', 'expanded',( ->
     cached = @get '_childrenCache'
+    # don't bother sorting unless expanded
+    if not @get 'expanded'
+      return cached
     @sortByPromise(cached, @get('sortchildrenby')).then (result) =>
       @set 'sortedChildren', result
   ).on('init')
