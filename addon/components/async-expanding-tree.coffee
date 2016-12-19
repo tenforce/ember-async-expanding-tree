@@ -124,7 +124,7 @@ AsyncExpandingTreeComponent = Ember.Component.extend
     else return false
 # override those if you want default values
   defaultTooltipNode: undefined
-  defaultTooltipExpander: 'Click to expand'
+  defaultTooltipExpander: 'Click to expand/collapse'
   defaultTooltipLabel: undefined
   defaultTooltipLoadMore: 'Load more'
 
