@@ -83,8 +83,13 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts,
   showMaxChildren: Ember.computed.alias 'config.showMaxChildren'
   beforeComponent: Ember.computed.alias 'config.beforeComponent'
   afterComponent: Ember.computed.alias 'config.afterComponent'
-  label: Ember.computed 'labelPropertyPath', 'model', ->
-    @get("model.#{@get('labelPropertyPath')}")
+# we create a dynamic computed property to check when the value of the label is changed
+  setLabel: Ember.observer('labelPropertyPath', 'model', () ->
+    key = "model.#{@get('labelPropertyPath')}"
+    Ember.defineProperty @, "label",
+      Ember.computed 'labelPropertyPath', 'model', key, ->
+        @get("model.#{@get('labelPropertyPath')}")
+  ).on('init')
   sortedChildren: []
   childrenSorter: Ember.observer '_childrenCache', 'sortchildrenby', 'expanded',( ->
     cached = @get '_childrenCache'
