@@ -48,7 +48,7 @@
     "ember-cli-babel": "^5.1.5",
     "ember-cli-coffeescript": "1.13.2",
     "ember-cli-htmlbars": "^1.0.1",
-    "ember-keyboard-shortcuts": "0.3.0",
+    "ember-keyboard-shortcuts": "git+https://github.com/asjongers/ember-keyboard-shortcuts.git#v0.3.6",
     "ember-promise-helpers": "1.0.1"
   },
   "ember-addon": {
