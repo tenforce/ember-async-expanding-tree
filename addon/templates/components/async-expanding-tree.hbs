@@ -20,7 +20,7 @@
       {{/if}}
     </div>
 </div>
-{{#if expanded}}
+{{#if (and expanded expandable)}}
     <ul class="sublist">
       {{#each children as |child index|}}
         {{#if shouldExpandChildren}}
