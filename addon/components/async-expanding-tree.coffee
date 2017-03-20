@@ -130,6 +130,11 @@ AsyncExpandingTreeComponent = Ember.Component.extend KeyboardShortcuts, TooltipM
       sorted.slice(0, @get('childrenSlice'))
     else
       []
+  dirtyObserver: Ember.observer 'model.dirty', ( ->
+    if @get('model.dirty') is true
+      @fetchChildren()
+      @set('model.dirty', false)
+  ).on('init')
   toggleExpandF: ->
     @toggleProperty('expanded')
     if @get('expanded')
