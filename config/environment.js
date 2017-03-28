@@ -1,6 +1,9 @@
 /*jshint node:true*/
 'use strict';
 
-module.exports = function(/* environment, appConfig */) {
-  return { };
+module.exports = function(environment, appConfig ) {
+  var ENV = {
+    modulePrefix: 'async-expanding-tree'
+  };
+  return ENV;
 };

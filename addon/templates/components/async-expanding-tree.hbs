@@ -1,6 +1,7 @@
 <div class="aet-node" title={{tooltipNode}}>
   {{#if expandable}}
-      <div class="{{if expanded 'aet-expanded' 'aet-collapsed'}}" {{action 'toggleExpand'}} title={{tooltipExpander}}></div>
+      <div class="{{if expanded 'aet-expanded' 'aet-collapsed'}}" {{action 'toggleExpand' on="enter" on="click"}}
+           title={{tooltipExpander}}></div>
   {{/if}}
   {{#if loading}}
       <i class="fa fa-circle-o-notch fa-spin"></i>
@@ -19,10 +20,17 @@
       {{/if}}
     </div>
 </div>
-{{#if expanded}}
+{{#if (and expanded expandable)}}
     <ul class="sublist">
-      {{#each children as |child|}}
-        {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected level=nextLevel}}
+      {{#each children as |child index|}}
+        {{#if shouldExpandChildren}}
+          {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected level=nextLevel
+          inheritedExpanded=true shouldExpandChildren=true selectParent="selectParent" selectOlderBrother="selectOlderBrother"
+          selectYoungerBrother="selectYoungerBrother" index=index disableShortcuts=disableShortcuts}}
+        {{else}}
+          {{async-expanding-tree model=child config=config fetchChildrenOnInit=true selected=selected level=nextLevel
+          selectParent="selectParent" selectOlderBrother="selectOlderBrother" selectYoungerBrother="selectYoungerBrother" index=index disableShortcuts=disableShortcuts}}
+        {{/if}}
       {{/each}}
       {{#if showLoadMore}}
           <div class="aet-load-more" title={{tooltipLoadMore}}>
